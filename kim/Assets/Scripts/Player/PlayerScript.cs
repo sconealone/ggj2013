@@ -23,10 +23,6 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 		Move();
-		distanceTraveled += speed*Time.deltaTime;
-		
-		//print(speed);
-		
 		
 	}
 	
@@ -39,8 +35,9 @@ public class PlayerScript : MonoBehaviour {
 		else{
 			speed = defaultSpeed;
 		}
-		transform.position += transform.right * speed * Time.deltaTime;
 		
+		transform.position += transform.right * speed * Time.deltaTime;
+		distanceTraveled += speed*Time.deltaTime;
 		
 			CharacterController controller = GetComponent<CharacterController>();
 			if (controller.isGrounded){
@@ -53,6 +50,8 @@ public class PlayerScript : MonoBehaviour {
 			
 			moveDirection.y -= gravity * Time.deltaTime;
         	controller.Move(moveDirection * Time.deltaTime);
+		
+			
 			
 		
 		
