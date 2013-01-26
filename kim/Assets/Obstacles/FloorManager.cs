@@ -8,31 +8,50 @@ public class FloorManager : MonoBehaviour {
 	public Transform tile;
 	public int recycleOffset;
 	
-	private Queue<Transform> tilePool;
+	private Queue<Transform> floorPool;
+	private Queue<Transform> cielingPool;
 	
+	Vector3 cielingPosition;
 	Vector3 nextPosition;
-	public int TILE_POOL = 10;
+	public int TILE_POOL;
 	// Use this for initialization
 	void Start () {
-	
-		tilePool = new Queue<Transform>(TILE_POOL);
+		floorPool = new Queue<Transform>(TILE_POOL);
+		cielingPool = new Queue<Transform>(TILE_POOL);
+		
 		nextPosition = transform.localPosition;
+		cielingPosition = transform.localPosition;
+		cielingPosition.y = cielingPosition.y + 9;
+		
 		for(int i = 0; i < TILE_POOL; i++){
 			Transform o = (Transform)Instantiate(tile);
 			o.localPosition = nextPosition;
 			nextPosition.x += o.localScale.x;
-			tilePool.Enqueue(o);
+			floorPool.Enqueue(o);
+			
+			Transform o1 = (Transform) Instantiate(tile);
+			o1.localPosition = cielingPosition;
+			cielingPosition.x += o1.localScale.x;
+			cielingPool.Enqueue(o1);
+			
 		}
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(tilePool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
-			Transform o = (Transform)tilePool.Dequeue();
+		if(floorPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
+			Transform o = (Transform)floorPool.Dequeue();
 			o.localPosition = nextPosition; 
 			nextPosition.x += o.localScale.x;
-			tilePool.Enqueue(o);
+			floorPool.Enqueue(o);
+			
+		}
+		if(cielingPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
+			Transform c = (Transform) cielingPool.Dequeue();
+			c.localPosition = cielingPosition;
+			cielingPosition.x += c.localScale.x;
+			cielingPool.Enqueue(c);
 		}
 	}
 }
