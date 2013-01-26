@@ -4,7 +4,7 @@ using System.Collections;
 public class PlayerScript : MonoBehaviour {
 	
 	public static float defaultSpeed = 5.0f;
-	public static float slowDownSpeed = 3.0f;
+	public static float slowDownSpeed = 1.0f;
 	
 	private float speed = 5.0f;
 	
@@ -20,23 +20,26 @@ public class PlayerScript : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () {
+	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 		Move();
 		distanceTraveled += 5f*Time.deltaTime;
+		
+		//print(speed);
+		
+		
 	}
 	
 	
 	void Move(){
-		
+		print("speed changed :");
 		if (Input.GetKeyDown(KeyCode.A)){
 			speed = slowDownSpeed;
 		}
-		else if (Input.GetKeyDown(KeyCode.D)){
+		else{
 			speed = defaultSpeed;
-			
 		}
-		
+		Debug.Log(speed);
 		transform.position += transform.right * speed * Time.deltaTime;
 		
 		
@@ -55,4 +58,6 @@ public class PlayerScript : MonoBehaviour {
 		
 		
 	}
+	
+	
 }
