@@ -23,7 +23,7 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 		Move();
-		distanceTraveled += 5f*Time.deltaTime;
+		distanceTraveled += speed*Time.deltaTime;
 		
 		//print(speed);
 		
@@ -32,14 +32,13 @@ public class PlayerScript : MonoBehaviour {
 	
 	
 	void Move(){
-		print("speed changed :");
+		
 		if (Input.GetKeyDown(KeyCode.A)){
 			speed = slowDownSpeed;
 		}
 		else{
 			speed = defaultSpeed;
 		}
-		Debug.Log(speed);
 		transform.position += transform.right * speed * Time.deltaTime;
 		
 		
