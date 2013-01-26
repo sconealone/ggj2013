@@ -5,9 +5,11 @@ using System.Collections.Generic;
 
 public class FloorManager : MonoBehaviour {
 	
+	private int blockIndex;
 	public Transform tile;
 	public int recycleOffset;
 	
+	private Queue<Transform> obstaclePool;
 	private Queue<Transform> floorPool;
 	private Queue<Transform> cielingPool;
 	
@@ -33,7 +35,7 @@ public class FloorManager : MonoBehaviour {
 			o1.localPosition = cielingPosition;
 			cielingPosition.x += o1.localScale.x;
 			cielingPool.Enqueue(o1);
-			
+			blockIndex++;
 		}
 		
 	}
@@ -45,6 +47,8 @@ public class FloorManager : MonoBehaviour {
 			o.localPosition = nextPosition; 
 			nextPosition.x += o.localScale.x;
 			floorPool.Enqueue(o);
+			blockIndex++;
+			
 			
 		}
 		if(cielingPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
@@ -53,5 +57,6 @@ public class FloorManager : MonoBehaviour {
 			cielingPosition.x += c.localScale.x;
 			cielingPool.Enqueue(c);
 		}
+		print(blockIndex);
 	}
 }
