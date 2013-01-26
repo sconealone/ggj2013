@@ -6,3 +6,8 @@
 *.csproj
 *.unityproj
 *.sln
+
+# Vim
+*.swp
+*.swo
+*.pidb
