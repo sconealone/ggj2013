@@ -5,7 +5,11 @@ using System.Collections.Generic;
 
 public class FloorManager : MonoBehaviour {
 	
+	//debug variables
 	private bool DEBUG = false;
+	private int obstacle_count;
+	//debug var end
+	
 	
 	private int blockIndex;
 	
@@ -79,6 +83,8 @@ public class FloorManager : MonoBehaviour {
 			blockIndex++;
 			
 			
+			//generate obstacles on new tile creation
+			GenerateObstacle(blockIndex);
 		}
 		if(cielingPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
 			Transform c = (Transform) cielingPool.Dequeue();
@@ -90,7 +96,7 @@ public class FloorManager : MonoBehaviour {
 			//print(blockIndex);
 			Debug.Log(floorPosition.y);
 		}
-		GenerateObstacle(blockIndex);
+		
 	}
 	/**
 	 * 
@@ -102,11 +108,12 @@ public class FloorManager : MonoBehaviour {
 		switch(tiles[index]){
 		case 'S':
 			Transform t = (Transform) obstaclePool.Dequeue();
-			
+			Debug.Log(obstacle_count++);
 			Vector3 newPosition = floorPosition;
 			newPosition.y = floorPosition.y + 1; 
 			t.localPosition = newPosition;
 			t.localScale = Vector3.one * 3;
+			
 			obstaclePool.Enqueue(t);
 			break;
 		default:
