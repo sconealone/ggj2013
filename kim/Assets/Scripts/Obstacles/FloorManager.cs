@@ -15,17 +15,20 @@ public class FloorManager : MonoBehaviour {
 	
 	Vector3 cielingPosition;
 	Vector3 nextPosition;
-	public int TILE_POOL;
+	public int MAX_TILE_POOL_SIZE;
 	// Use this for initialization
 	void Start () {
-		floorPool = new Queue<Transform>(TILE_POOL);
-		cielingPool = new Queue<Transform>(TILE_POOL);
+		blockIndex = 0;
+		
+		obstaclePool = new Queue<Transform>(MAX_TILE_POOL_SIZE);
+		floorPool = new Queue<Transform>(MAX_TILE_POOL_SIZE);
+		cielingPool = new Queue<Transform>(MAX_TILE_POOL_SIZE);
 		
 		nextPosition = transform.localPosition;
 		cielingPosition = transform.localPosition;
 		cielingPosition.y = cielingPosition.y + 9;
 		
-		for(int i = 0; i < TILE_POOL; i++){
+		for(int i = 0; i < MAX_TILE_POOL_SIZE; i++){
 			Transform o = (Transform)Instantiate(tile);
 			o.localPosition = nextPosition;
 			nextPosition.x += o.localScale.x;
