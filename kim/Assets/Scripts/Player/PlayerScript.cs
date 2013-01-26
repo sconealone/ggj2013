@@ -29,11 +29,11 @@ public class PlayerScript : MonoBehaviour {
 		
 	}
 	
-	void OnGUI(){
-		if (isGameOver) {
-      	GUI.Label(Rect(0,0, 100, 20), "Game Over!");
-		}
-	}
+//	void OnGUI(){
+//		if (isGameOver) {
+///      	GUI.Label(Rect(0,0, 100, 20), "Game Over!");
+//		}
+//	}
 	
 	
 	void Move(){

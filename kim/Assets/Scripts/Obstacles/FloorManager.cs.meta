@@ -3,7 +3,8 @@ guid: 5a314fc8da0a245afb27996ae8292625
 MonoImporter:
   serializedVersion: 2
   defaultReferences:
-  - tile: {fileID: 400000, guid: ca0218d662ccc47e298439fec02c7561, type: 2}
+  - floor: {fileID: 400000, guid: ca0218d662ccc47e298439fec02c7561, type: 2}
+  - obstacles: {fileID: 400000, guid: b612486fe72694f83b326276b9fc94ae, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

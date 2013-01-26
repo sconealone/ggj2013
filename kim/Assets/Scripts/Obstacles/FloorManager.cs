@@ -8,7 +8,10 @@ public class FloorManager : MonoBehaviour {
 	private bool DEBUG = false;
 	
 	private int blockIndex;
-	public Transform tile;
+	
+	public Transform floor;
+	public Transform obstacles;
+	
 	public int recycleOffset;
 	
 	private Queue<Transform> obstaclePool;
@@ -28,7 +31,12 @@ public class FloorManager : MonoBehaviour {
 	 * S = shelf (1 block)
 	 * 
 	 */
-	private string LEVEL_TILES = "EEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEE";
+	private string LEVEL_TILES = "EEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEE" +
+		"EEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSE" +
+		"EEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEE" +
+		"EEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
+		"EEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
+		"EEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEE";
 	
 	// Use this for initialization
 	void Start () {
@@ -45,18 +53,18 @@ public class FloorManager : MonoBehaviour {
 		FLOOR_Y = floorPosition.y;
 		
 		for(int i = 0; i < MAX_TILE_POOL_SIZE; i++){
-			Transform o = (Transform)Instantiate(tile);
+			Transform o = (Transform)Instantiate(floor);
 			o.localPosition = floorPosition;
 			floorPosition.x += o.localScale.x;
 			floorPool.Enqueue(o);
 			
-			Transform o1 = (Transform) Instantiate(tile);
+			Transform o1 = (Transform) Instantiate(floor);
 			o1.localPosition = cielingPosition;
 			cielingPosition.x += o1.localScale.x;
 			cielingPool.Enqueue(o1);
 			blockIndex++;
 			
-			obstaclePool.Enqueue((Transform) Instantiate(tile));
+			obstaclePool.Enqueue((Transform)Instantiate(obstacles));
 		}
 		
 	}
@@ -90,6 +98,7 @@ public class FloorManager : MonoBehaviour {
 	 */
 	void GenerateObstacle(int index){
 		char[] tiles = LEVEL_TILES.ToCharArray();
+		index = index % LEVEL_TILES.Length;
 		switch(tiles[index]){
 		case 'S':
 			Transform t = (Transform) obstaclePool.Dequeue();
@@ -97,7 +106,7 @@ public class FloorManager : MonoBehaviour {
 			Vector3 newPosition = floorPosition;
 			newPosition.y = floorPosition.y + 1; 
 			t.localPosition = newPosition;
-			
+			t.localScale = Vector3.one * 3;
 			obstaclePool.Enqueue(t);
 			break;
 		default:
