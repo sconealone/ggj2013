@@ -3,12 +3,12 @@ using System;
 public class HeartRateManager
 {
     // Rates
-    public static float RUNNING_HEART_RATE = 6.0f;
+    public static float RUNNING_HEART_RATE = 6.3f;
     public static float JOGGING_HEART_RATE = -2.0f;
     public static float RECOVER_STAMINA_HEART_RATE = -20.0f;
 
     // Caps
-    public static float MIN_HEART_RATE = 110.0f;
+    public static float MIN_HEART_RATE = 90.0f;
     public static float MODERATE_HEART_RATE_BREAKPOINT = 140.0f;
     public static float HIGH_HEART_RATE_BREAKPOINT = 170.0f;
     public static float MAX_HEART_RATE = 190.0f;
@@ -27,7 +27,7 @@ public class HeartRateManager
     public HeartRateManager(PlayerScript player)
     {
         this.player = player;
-        currentHeartRate = MIN_HEART_RATE;
+        currentHeartRate = MODERATE_HEART_RATE_BREAKPOINT;
     }
 
     // Pass in the time delta
@@ -42,7 +42,8 @@ public class HeartRateManager
         }
         else if (currentState.Equals("jogging"))
         {
-            currentHeartRate += JOGGING_HEART_RATE*dt;
+			if (currentHeartRate >= MIN_HEART_RATE)
+            	currentHeartRate += JOGGING_HEART_RATE*dt;
         }
         else if (currentState.Equals("jumping"))
         {
@@ -67,11 +68,11 @@ public class HeartRateManager
 
     public void AssignPenalty(String reasonForPenalty)
     {
-        if (reasonForPenalty.Equals("Collectable"))
+        if (reasonForPenalty.Equals("Swag"))
         {
             currentHeartRate += COLLECTIBLE_ITEM_REWARD;
         }
-        else if (reasonForPenalty.Equals("Destructable Object") || reasonForPenalty.Equals("Light"))
+        else if (reasonForPenalty.Equals("Computer") || reasonForPenalty.Equals("Light") || reasonForPenalty.Equals("Fridge"))
         {
             currentHeartRate += DESTRUCTABLE_OBJECT_PENALTY;
         }
@@ -79,7 +80,7 @@ public class HeartRateManager
         {
             currentHeartRate += JUMP_PENALTY;
         }
-        else if (reasonForPenalty.Equals("Obstacles"))
+        else if (reasonForPenalty.Equals("Table") || reasonForPenalty.Equals("Chair"))
         {
             currentHeartRate += DURABLE_OBJECT_PENALTY;
         }

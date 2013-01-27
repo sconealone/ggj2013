@@ -16,11 +16,11 @@ public class Obstacles : MonoBehaviour
         if (collisionInfo.gameObject.name.Equals("Wave"))
         {
             //Destroy(gameObject);
-
+			// Taken care of in WaveLogic
         }
         else if (collisionInfo.gameObject.name.Equals("Player"))
         {
-            hitPoints--;
+            //hitPoints--;
         }
     }
 

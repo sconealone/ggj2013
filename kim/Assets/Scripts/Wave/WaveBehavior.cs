@@ -26,7 +26,7 @@ public class WaveBehavior : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		if (collision.gameObject.tag == "Player"){
+		if (collision.gameObject.name == "Player"){
 			isGameOver = true;
 		}
         else

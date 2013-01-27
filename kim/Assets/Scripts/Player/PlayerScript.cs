@@ -122,7 +122,7 @@ public class PlayerScript : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collisionInfo){
 		
-		if (collisionInfo.gameObject.name == "Collectable"){
+		if (collisionInfo.gameObject.name == "Swag"){
             heartRateManager.AssignPenalty(collisionInfo.gameObject.name);
 		}
         else if (collisionInfo.gameObject.name.Equals("Table") ||
