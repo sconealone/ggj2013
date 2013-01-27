@@ -14,7 +14,6 @@ public class PlayerScript : MonoBehaviour {
 	
 	private Vector3 moveDirection =  Vector3.zero;
 	
-	private bool isGameOver = false;
 	
 	public static float distanceTraveled;
 	
@@ -82,11 +81,6 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}*/
 	
-	void OnCollisionEnter(Collision collision){
-		if (collision.gameObject.name == "Wave"){
-			isGameOver = true;
-		}
-	}
 	
 	
 }

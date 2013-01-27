@@ -111,7 +111,7 @@ public class FloorManager : MonoBehaviour {
 	 * 
 	 */
 	void GenerateObstacle(int index){
-		
+
 		if(index < LEVEL_TILES.Length){
 			char[] tiles = LEVEL_TILES.ToCharArray();
 			switch(tiles[index]){
@@ -128,6 +128,7 @@ public class FloorManager : MonoBehaviour {
 			default:
 				break;
 			}
+
 		}
 		
 	}
