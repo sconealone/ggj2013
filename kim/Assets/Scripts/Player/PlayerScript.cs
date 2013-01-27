@@ -69,7 +69,7 @@ public class PlayerScript : MonoBehaviour {
 	void Move(){
 		
         CharacterController controller = GetComponent<CharacterController>();
-        if (hitRecovery || controller.isGrounded)
+        if (hitRecovery || !controller.isGrounded)
         {
             // don't change speed
         }
