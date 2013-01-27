@@ -27,6 +27,8 @@ public class FloorManager : MonoBehaviour {
 	public int MAX_TILE_POOL_SIZE;
 	private float FLOOR_Y;
 	
+	public int CEILING_HEIGHT = 12;
+	
 	
 	private bool hasStarted = false;
 	/*
@@ -55,7 +57,7 @@ public class FloorManager : MonoBehaviour {
 		
 		floorPosition = transform.localPosition;
 		cielingPosition = transform.localPosition;
-		cielingPosition.y = cielingPosition.y + 9;
+		cielingPosition.y = cielingPosition.y + CEILING_HEIGHT;
 		
 		FLOOR_Y = floorPosition.y;
 		
@@ -119,9 +121,11 @@ public class FloorManager : MonoBehaviour {
 				Transform t = (Transform) obstaclePool.Dequeue();
 				Debug.Log(obstacle_count++);
 				Vector3 newPosition = floorPosition;
-				newPosition.y = floorPosition.y + 1; 
+				
+				t.localScale = RandomVector(1,3,1,3,1,1);
+				newPosition.y = floorPosition.y + t.localScale.y; 
 				t.localPosition = newPosition;
-				t.localScale = Vector3.one * 3;
+				
 				
 				obstaclePool.Enqueue(t);
 				break;
@@ -131,5 +135,10 @@ public class FloorManager : MonoBehaviour {
 
 		}
 		
+	}
+	
+	private Vector3 RandomVector(float min_x, float max_x, float min_y, float max_y,float min_z, float max_z){
+		
+		return new Vector3(Random.Range(min_x, max_x), Random.Range(min_y,max_y), Random.Range(min_z, max_z));
 	}
 }
