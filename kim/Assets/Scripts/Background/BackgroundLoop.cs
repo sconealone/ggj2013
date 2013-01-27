@@ -11,16 +11,16 @@ public class BackgroundLoop : MonoBehaviour {
 	private Camera camera;
 	
 	
-	public int BACKGROUND_POOL;
-	public int SCREEN_OFFSET;
+	public int BACKGROUND_POOL = 3;
+	public int SCREEN_OFFSET = 60;
 	
-	public int BACKGROUND_X;
+	public int BACKGROUND_X = 28;
 	
 	private Queue<Transform> backgrounds;
 	
-	public float Z_POS;
-	public float Y_POS;
-	public float furthest_X;
+	public float Z_POS = 2;
+	public float Y_POS = 3;
+	public float furthest_X = 0;
 	
 	// Use this for initialization
 	void Start () {
@@ -28,7 +28,6 @@ public class BackgroundLoop : MonoBehaviour {
 		furthest_X = PlayerScript.distanceTraveled;
 		
 		backgrounds = new Queue<Transform>(BACKGROUND_POOL);
-		
 		Vector3 tempPos = new Vector3(-15,0,0);
 		
 		for(int i = 0; i < BACKGROUND_POOL; i ++){
