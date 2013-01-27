@@ -27,7 +27,7 @@ public class HeartRateManager
     public HeartRateManager(PlayerScript player)
     {
         this.player = player;
-        currentHeartRate = MODERATE_HEART_RATE_BREAKPOINT;
+        currentHeartRate = 110;
     }
 
     // Pass in the time delta
@@ -52,7 +52,7 @@ public class HeartRateManager
         else if (currentState.Equals("recoverStamina"))
         {
             currentHeartRate += RECOVER_STAMINA_HEART_RATE*dt;
-            if (currentHeartRate < MODERATE_HEART_RATE_BREAKPOINT)
+            if (currentHeartRate < MODERATE_HEART_RATE_BREAKPOINT-10)
             {
                 player.SetState("running");
             }
