@@ -13,15 +13,13 @@ public class WaveBehavior : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		transform.position +=  transform.right * waveSpeed * Time.deltaTime;
-		
-		
+		transform.position +=  transform.right * waveSpeed * Time.deltaTime;	
 	}
-	
 	
 	void OnGUI(){
 		if (isGameOver) {
-      	GUI.Box(new Rect( (Screen.width * 0.5f) - 60f, Screen.height - 35f, 120f, 25f ), "Game Over");
+      		GUI.Box(new Rect( (Screen.width * 0.5f) - 60f, Screen.height - 35f, 120f, 25f ), "Game Over");
+			Application.LoadLevel("gameover");
 		}
 	}
 	
