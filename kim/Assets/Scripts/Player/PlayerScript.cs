@@ -16,6 +16,8 @@ public class PlayerScript : MonoBehaviour {
 	private bool isGameOver = false;
 	
 	public static float distanceTraveled;
+	
+	private int BPM;
 	// Use this for initialization
 	void Start () {
 	
@@ -25,15 +27,15 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 		Move();
-
+		UpdateBPM();
 		
 	}
-	
-//	void OnGUI(){
-//		if (isGameOver) {
-///      	GUI.Label(Rect(0,0, 100, 20), "Game Over!");
-//		}
-//	}
+	void UpdateBPM(){
+		
+	}
+	void OnGUI(){
+		GUI.Label(new Rect (0,0,100,50), "BPM"+ BPM);
+	}
 	
 	
 	void Move(){
