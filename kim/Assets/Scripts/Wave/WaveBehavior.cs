@@ -15,9 +15,20 @@ public class WaveBehavior : MonoBehaviour {
 	void Update () {
 		transform.position +=  transform.right * waveSpeed * Time.deltaTime;
 		
+		
+	}
+	
+	
+	void OnGUI(){
+		if (isGameOver) {
+      	GUI.Box(new Rect( (Screen.width * 0.5f) - 60f, Screen.height - 35f, 120f, 25f ), "Game Over");
+		}
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		Debug.Log(collision.gameObject.tag.ToString());
+		//Debug.Log(collision.gameObject.tag.ToString());
+		if (collision.gameObject.tag == "Player"){
+			isGameOver = true;
+		}
 	}
 }

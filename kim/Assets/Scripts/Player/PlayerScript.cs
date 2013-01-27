@@ -13,14 +13,17 @@ public class PlayerScript : MonoBehaviour {
 	
 	private Vector3 moveDirection =  Vector3.zero;
 	
-	private bool isGameOver = false;
 	
 	public static float distanceTraveled;
 	
-	private int BPM;
+	// bpm rates
+	private float BPM;
+	private float BPM_REG_RATE = 2;
+	private float BPM_JUMP_RATE = 4;
 	// Use this for initialization
 	void Start () {
 	
+		BPM = 70;
 	}
 	
 	// Update is called once per frame
@@ -31,10 +34,11 @@ public class PlayerScript : MonoBehaviour {
 		
 	}
 	void UpdateBPM(){
+		BPM += BPM_REG_RATE*Time.deltaTime;
 		
 	}
 	void OnGUI(){
-		GUI.Label(new Rect (0,0,100,50), "BPM"+ BPM);
+		GUI.Label(new Rect (0,0,100,50), "BPM"+ BPM.ToString("0..00"));
 	}
 	
 	
@@ -58,8 +62,10 @@ public class PlayerScript : MonoBehaviour {
 				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             	moveDirection = transform.TransformDirection(moveDirection);
             	moveDirection *= speed;
-            	if (Input.GetButton("Jump"))
-                	moveDirection.y = jumpSpeed;
+            	if (Input.GetButton("Jump")){
+				 	moveDirection.y = jumpSpeed;
+					BPM += BPM_JUMP_RATE;
+				}
 			}
 			
 			moveDirection.y -= gravity * Time.deltaTime;
@@ -77,11 +83,6 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}*/
 	
-	void OnCollisionEnter(Collision collision){
-		if (collision.gameObject.name == "Wave"){
-			isGameOver = true;
-		}
-	}
 	
 	
 }
