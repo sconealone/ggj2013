@@ -20,8 +20,10 @@ public class PlayerScript : MonoBehaviour {
 	
 	// bpm rates
 	private float BPM;
-	private float BPM_REG_RATE = 2;
-	private float BPM_JUMP_RATE = 4;
+	private float BPM_REG_RATE = 5;
+	private float BPM_JUMP_RATE = 3;
+	
+	
 	// Use this for initialization
 	void Start () {
 	
