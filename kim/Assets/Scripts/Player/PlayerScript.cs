@@ -37,16 +37,22 @@ public class PlayerScript : MonoBehaviour {
         BPM = heartRateManager.GetCurrentHeartRate();
 	}
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 
         CheckHitRecovery();
 		UpdateBPM();
 		Move();
 		percentageFinished = transform.localPosition.x / FloorManager.LEVEL_TILES.Length;
-		
+		TrackPlayer();
 	}
-
+	
+	private void TrackPlayer()
+	{
+		GameObject camera = GameObject.Find("Main Camera");
+		camera.transform.Translate(speed*Time.deltaTime, 0, 0);
+	}
+	
     private void CheckHitRecovery()
     {
         if (hitRecovery)
