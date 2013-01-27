@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class PlayerScript : MonoBehaviour {
 	
@@ -29,18 +30,25 @@ public class PlayerScript : MonoBehaviour {
     private bool hitRecovery = false;
     private float hitRecoveryTimer = 0;
     public static float hitRecoveryTimePenalty = 1.0f;
+
+    private String state;
+    private HeartRateManager heartRateManager;
+
 	
 	// Use this for initialization
 	void Start () {
 	
 		BPM = 120;
+        state = "running";
+        heartRateManager = new HeartRateManager(this);
 	}
 	// Update is called once per frame
 	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
+
         CheckHitRecovery();
-		Move();
 		UpdateBPM();
+		Move();
 		percentageFinished = transform.localPosition.x / FloorManager.LEVEL_TILES.Length;
 		
 	}
@@ -53,13 +61,19 @@ public class PlayerScript : MonoBehaviour {
             if (hitRecoveryTimer > hitRecoveryTimePenalty) 
             {
                 hitRecovery = false;
+                state = "running";
             }
         }
     }
 
 	void UpdateBPM(){
-		BPM += BPM_REG_RATE*Time.deltaTime;
+        if (heartRateManager.Update(Time.deltaTime))
+        {
+            state = "recoverStamina";
+        }
+        BPM = heartRateManager.GetCurrentHeartRate();
 	}
+
 	void OnGUI(){
 		GUI.Label(new Rect (0,0,100,20), "BPM: "+ BPM.ToString("0.00"));
 		GUI.Label(new Rect ( 0 , 20, 100 , 50), "% left: "+ (percentageFinished*100).ToString("0.00"));
@@ -73,11 +87,17 @@ public class PlayerScript : MonoBehaviour {
         {
             // don't change speed
         }
+        else if (state.Equals("recoverStamina"))
+        {
+            speed = 0.0f;
+        }
 		else if (Input.GetKey(KeyCode.A)){
 			speed = slowDownSpeed;
+            state = "jogging";
 		}
 		else{
 			speed = defaultSpeed;
+            state = "running";
 			
 		}
 
@@ -93,6 +113,7 @@ public class PlayerScript : MonoBehaviour {
             if (Input.GetButton("Jump")){
                 moveDirection.y = jumpSpeed;
                 BPM += BPM_JUMP_RATE;
+                state = "jumping";
             }
         }
         
@@ -103,26 +124,38 @@ public class PlayerScript : MonoBehaviour {
 	void OnCollisionEnter(Collision collisionInfo){
 		Debug.Log("ori BPM: " + BPM);
 		if (collisionInfo.gameObject.name == "Collectable"){
-			BPM -= 20;	
+            heartRateManager.Collide(collisionInfo.gameObject.name);
 		}
         else if (collisionInfo.gameObject.name.Equals("Obstacles"))
         {
             hitRecovery = true;
             hitRecoveryTimer = 0;
             speed = destructableObjectPenalty;
+            state = "hitRecovery";
         }
         else if (collisionInfo.gameObject.name.Equals("Destructable Object"))
         {
             hitRecovery = true;
             hitRecoveryTimer = 0;
             speed = destructableObjectPenalty;
-            BPM += BPM_OBSTACLE_PENALTY;
+            state = "hitRecovery";
+            heartRateManager.Collide(collisionInfo.gameObject.name);
         }
-		
-		Debug.Log("new BPM: " + BPM);
 	}
 	
+	public float GetSpeed()
+    {
+        return speed;
+    }
+
+    public String GetState()
+    {
+        return state;
+    }
 	
-	
+    public void SetState(String aState)
+    {
+        state = aState;
+    }
 	
 }
