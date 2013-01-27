@@ -27,6 +27,8 @@ public class FloorManager : MonoBehaviour {
 	public int MAX_TILE_POOL_SIZE;
 	private float FLOOR_Y;
 	
+	
+	private bool hasStarted = false;
 	/*
 	 * 
 	 * tiles for obstacles
@@ -35,15 +37,16 @@ public class FloorManager : MonoBehaviour {
 	 * S = shelf (1 block)
 	 * 
 	 */
-	private string LEVEL_TILES = "EEEEEEESSSEEEEESSEEEEEEEESSEEEEESSEEEEEEEEE" +
-		"EEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSE" +
-		"EEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEE" +
-		"EEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
-		"EEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
-		"EEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEE";
+	private string LEVEL_TILES = "EEEEEEEEESSSEEEEESSEEESSEEEEESSEEEEEEEEE" +
+		"EEEEESSSEEEEESSEEEEEESSEEEEESSEEEEEEESSSEEEEESSE" +
+		"EEEEEEEEEEEEEESSEEEEESSEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEE" +
+		"EEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
+		"EEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
+		"EEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEESSSEEEEESSEEEEEESSEEEEESSEEE";
 	
 	// Use this for initialization
 	void Start () {
+		
 		blockIndex = 0;
 		
 		obstaclePool = new Queue<Transform>(MAX_TILE_POOL_SIZE);
@@ -69,33 +72,38 @@ public class FloorManager : MonoBehaviour {
 			blockIndex++;
 			
 			obstaclePool.Enqueue((Transform)Instantiate(obstacles));
+			
+			GenerateObstacle(blockIndex);
+			
 		}
+		
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(floorPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
-			Transform o = (Transform)floorPool.Dequeue();
-			o.localPosition = floorPosition; 
-			floorPosition.x += o.localScale.x;
-			floorPool.Enqueue(o);
-			blockIndex++;
-			
-			
-			//generate obstacles on new tile creation
-			GenerateObstacle(blockIndex);
-		}
-		if(cielingPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
-			Transform c = (Transform) cielingPool.Dequeue();
-			c.localPosition = cielingPosition;
-			cielingPosition.x += c.localScale.x;
-			cielingPool.Enqueue(c);
-		}
-		if(DEBUG == true){
-			//print(blockIndex);
-			Debug.Log(floorPosition.y);
-		}
+			if(floorPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
+				Transform o = (Transform)floorPool.Dequeue();
+				o.localPosition = floorPosition; 
+				floorPosition.x += o.localScale.x;
+				floorPool.Enqueue(o);
+				blockIndex++;
+				
+				
+				//generate obstacles on new tile creation
+				
+			}
+			if(cielingPool.Peek().localPosition.x + recycleOffset < PlayerScript.distanceTraveled){
+				Transform c = (Transform) cielingPool.Dequeue();
+				c.localPosition = cielingPosition;
+				cielingPosition.x += c.localScale.x;
+				cielingPool.Enqueue(c);
+				GenerateObstacle(blockIndex);
+			}
+			if(DEBUG == true){
+				//print(blockIndex);
+				Debug.Log(floorPosition.y);
+			}
 		
 	}
 	/**
