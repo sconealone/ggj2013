@@ -121,17 +121,21 @@ public class PlayerScript : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collisionInfo){
+		
 		if (collisionInfo.gameObject.name == "Collectable"){
             heartRateManager.AssignPenalty(collisionInfo.gameObject.name);
 		}
-        else if (collisionInfo.gameObject.name.Equals("Obstacles"))
+        else if (collisionInfo.gameObject.name.Equals("Table") ||
+				collisionInfo.gameObject.name.Equals("Chair") )
         {
             hitRecovery = true;
             hitRecoveryTimer = hitRecoveryTimePenalty;
             speed = destructableObjectPenalty;
             state = "hitRecovery";
         }
-        else if (collisionInfo.gameObject.name.Equals("Destructable Object"))
+        else if (collisionInfo.gameObject.name.Equals("Computer") ||
+				collisionInfo.gameObject.name.Equals("Fridge")
+			)
         {
             hitRecovery = true;
             hitRecoveryTimer = hitRecoveryTimePenalty;
