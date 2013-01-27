@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WaveBehavior : MonoBehaviour {
 	
-	public static float waveSpeed = 4.8f;
+	public static float waveSpeed = 4.5f;
 	private bool isGameOver = false;
 	
 	// Use this for initialization
@@ -26,9 +26,12 @@ public class WaveBehavior : MonoBehaviour {
 	}
 	
 	void OnCollisionEnter(Collision collision) {
-		//Debug.Log(collision.gameObject.tag.ToString());
 		if (collision.gameObject.tag == "Player"){
 			isGameOver = true;
 		}
+        else
+        {
+            Destroy(collision.gameObject);
+        }
 	}
 }

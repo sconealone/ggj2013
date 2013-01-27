@@ -15,7 +15,7 @@ public class Obstacles : MonoBehaviour
 
         if (collisionInfo.gameObject.name.Equals("Wave"))
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
 
         }
         else if (collisionInfo.gameObject.name.Equals("Player"))
