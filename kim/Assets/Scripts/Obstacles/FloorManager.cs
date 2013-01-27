@@ -37,7 +37,7 @@ public class FloorManager : MonoBehaviour {
 	 * S = shelf (1 block)
 	 * 
 	 */
-	private string LEVEL_TILES = "EEEEEEEEESSSEEEEESSEEESSEEEEESSEEEEEEEEE" +
+	public static string LEVEL_TILES = "EEEEEEEEESSSEEEEESSEEESSEEEEESSEEEEEEEEE" +
 		"EEEEESSSEEEEESSEEEEEESSEEEEESSEEEEEEESSSEEEEESSE" +
 		"EEEEEEEEEEEEEESSEEEEESSEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEE" +
 		"EEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
@@ -111,21 +111,23 @@ public class FloorManager : MonoBehaviour {
 	 * 
 	 */
 	void GenerateObstacle(int index){
-		char[] tiles = LEVEL_TILES.ToCharArray();
-		index = index % LEVEL_TILES.Length;
-		switch(tiles[index]){
-		case 'S':
-			Transform t = (Transform) obstaclePool.Dequeue();
-			Debug.Log(obstacle_count++);
-			Vector3 newPosition = floorPosition;
-			newPosition.y = floorPosition.y + 1; 
-			t.localPosition = newPosition;
-			t.localScale = Vector3.one * 3;
-			
-			obstaclePool.Enqueue(t);
-			break;
-		default:
-			break;
+		
+		if(index < LEVEL_TILES.Length){
+			char[] tiles = LEVEL_TILES.ToCharArray();
+			switch(tiles[index]){
+			case 'S':
+				Transform t = (Transform) obstaclePool.Dequeue();
+				Debug.Log(obstacle_count++);
+				Vector3 newPosition = floorPosition;
+				newPosition.y = floorPosition.y + 1; 
+				t.localPosition = newPosition;
+				t.localScale = Vector3.one * 3;
+				
+				obstaclePool.Enqueue(t);
+				break;
+			default:
+				break;
+			}
 		}
 		
 	}

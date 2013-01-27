@@ -10,6 +10,7 @@ public class PlayerScript : MonoBehaviour {
 	
 	public float gravity = 9.80f;
 	public float jumpSpeed = 8.0f;
+	private float percentageFinished ;
 	
 	private Vector3 moveDirection =  Vector3.zero;
 	
@@ -26,20 +27,20 @@ public class PlayerScript : MonoBehaviour {
 	
 		BPM = 70;
 	}
-	
 	// Update is called once per frame
 	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 		Move();
 		UpdateBPM();
+		percentageFinished = transform.localPosition.x / FloorManager.LEVEL_TILES.Length;
 		
 	}
 	void UpdateBPM(){
 		BPM += BPM_REG_RATE*Time.deltaTime;
-		
 	}
 	void OnGUI(){
-		GUI.Label(new Rect (0,0,100,50), "BPM"+ BPM.ToString("0..00"));
+		GUI.Label(new Rect (0,0,100,20), "BPM: "+ BPM.ToString("0.00"));
+		GUI.Label(new Rect ( 0 , 20, 100 , 50), "% left: "+ (percentageFinished*100).ToString("0.00"));
 	}
 	
 	
@@ -71,11 +72,6 @@ public class PlayerScript : MonoBehaviour {
 			
 			moveDirection.y -= gravity * Time.deltaTime;
         	controller.Move(moveDirection * Time.deltaTime);
-		
-			
-			
-		
-		
 	}
 	
 	/*void OnControllerColliderHit(ControllerColliderHit hit){
