@@ -39,7 +39,7 @@ public class PlayerScript : MonoBehaviour {
 		AudioSource[] auSource = GetComponents<AudioSource>();
 		
 		heartBeat = auSource[0];
-		jump = auSource[1];
+		//jump = auSource[1];
 		
         state = "running";
         heartRateManager = new HeartRateManager(this);
@@ -128,12 +128,12 @@ public class PlayerScript : MonoBehaviour {
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= speed;
             if (Input.GetButton("Jump")){
-				if (jump.isPlaying == false){
-					jump.Play();
-				}
+				//if (jump.isPlaying == false){
+				//	jump.Play();
+				//}
                 moveDirection.y = jumpSpeed;
                 state = "jumping";
-				jump.Stop();
+				//jump.Stop();
             }
         }
         
@@ -158,8 +158,8 @@ public class PlayerScript : MonoBehaviour {
 				collisionInfo.gameObject.name.Equals("Fridge")
 			)
         {	
-			GameObject.Find("eletricalshock").audio.Play();
-			Debug.Log("shocked");
+			//GameObject.Find("eletricalshock").audio.Play();
+			//Debug.Log("shocked");
             hitRecovery = true;
             hitRecoveryTimer = hitRecoveryTimePenalty;
             speed = destructableObjectPenalty;
