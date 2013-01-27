@@ -3,8 +3,8 @@ using System;
 public class HeartRateManager
 {
     // Rates
-    public static float RUNNING_HEART_RATE = 7.0f;
-    public static float JOGGING_HEART_RATE = -3.0f;
+    public static float RUNNING_HEART_RATE = 6.0f;
+    public static float JOGGING_HEART_RATE = -2.0f;
     public static float RECOVER_STAMINA_HEART_RATE = -20.0f;
 
     // Caps
@@ -16,8 +16,10 @@ public class HeartRateManager
     public static float STAMINA_RECOVERY_TIME = 3.0f;
 
     // Penalties
+    public static float DURABLE_OBJECT_PENALTY = 5.0f;
     public static float DESTRUCTABLE_OBJECT_PENALTY = 10.0f;
     public static float COLLECTIBLE_ITEM_REWARD = -20.0f;
+    public static float JUMP_PENALTY = 2.5f;
 
     private float currentHeartRate;
     private PlayerScript player;
@@ -42,6 +44,10 @@ public class HeartRateManager
         {
             currentHeartRate += JOGGING_HEART_RATE*dt;
         }
+        else if (currentState.Equals("jumping"))
+        {
+            currentHeartRate += RUNNING_HEART_RATE*dt;
+        }
         else if (currentState.Equals("recoverStamina"))
         {
             currentHeartRate += RECOVER_STAMINA_HEART_RATE*dt;
@@ -59,15 +65,23 @@ public class HeartRateManager
         return currentHeartRate; 
     }
 
-    public void Collide(String gameObjectName)
+    public void AssignPenalty(String reasonForPenalty)
     {
-        if (gameObjectName.Equals("Collectable"))
+        if (reasonForPenalty.Equals("Collectable"))
         {
             currentHeartRate += COLLECTIBLE_ITEM_REWARD;
         }
-        else if (gameObjectName.Equals("Destructable Object"))
+        else if (reasonForPenalty.Equals("Destructable Object") || reasonForPenalty.Equals("Light"))
         {
             currentHeartRate += DESTRUCTABLE_OBJECT_PENALTY;
+        }
+        else if (reasonForPenalty.Equals("jumping"))
+        {
+            currentHeartRate += JUMP_PENALTY;
+        }
+        else if (reasonForPenalty.Equals("Obstacles"))
+        {
+            currentHeartRate += DURABLE_OBJECT_PENALTY;
         }
         
     }
