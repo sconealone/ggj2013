@@ -75,9 +75,18 @@ public class PlayerScript : MonoBehaviour {
         	controller.Move(moveDirection * Time.deltaTime);
 	}
 	
+	void OnCollisionEnter(Collision collisionInfo){
+		Debug.Log("ori BPM: " + BPM);
+		if (collisionInfo.gameObject.name == "Collectable"){
+			BPM -= 20;	
+		}
+		
+		Debug.Log("new BPM: " + BPM);
+	}
+	
 	/*void OnControllerColliderHit(ControllerColliderHit hit){
-		if (hit.gameObject.tag == "Wave"){
-			Debug.Log("you loss");
+		if (hit.gameObject.tag == "Collectable"){
+			Debug.Log ("-BPM BY 20");
 		}
 	}*/
 	
