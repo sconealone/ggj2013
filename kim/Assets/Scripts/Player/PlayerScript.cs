@@ -30,6 +30,7 @@ public class PlayerScript : MonoBehaviour {
 	
 	private AudioSource heartBeat;
 	private AudioSource jump;
+    private HudManager hudManager;
 
 	
 	// Use this for initialization
@@ -43,9 +44,8 @@ public class PlayerScript : MonoBehaviour {
         state = "running";
         heartRateManager = new HeartRateManager(this);
         BPM = heartRateManager.GetCurrentHeartRate();
-		
+        hudManager = new HudManager(heartRateManager);
 	}
-	// Update is called once per frame
 	void FixedUpdate () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 
@@ -59,6 +59,7 @@ public class PlayerScript : MonoBehaviour {
 			heartBeat.Play();
 		}
 		
+        hudManager.Update();
 	}
 	
 	private void TrackPlayer()
@@ -91,8 +92,8 @@ public class PlayerScript : MonoBehaviour {
 	
 	
 	void OnGUI(){
-		GUI.Label(new Rect (0,0,100,20), "BPM: "+ BPM.ToString("0.00"));
-		GUI.Label(new Rect ( 0 , 20, 100 , 50), "% left: "+ (percentageFinished*100).ToString("0.00"));
+		GUI.Label(new Rect (280,280,100,20), BPM.ToString("0"));
+//		GUI.Label(new Rect ( 0 , 20, 100 , 50), "% left: "+ (percentageFinished*100).ToString("0.00"));
 	}
 	
 	
