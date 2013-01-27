@@ -35,6 +35,7 @@ public class PlayerScript : MonoBehaviour {
         state = "running";
         heartRateManager = new HeartRateManager(this);
         BPM = heartRateManager.GetCurrentHeartRate();
+		
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -45,6 +46,11 @@ public class PlayerScript : MonoBehaviour {
 		Move();
 		percentageFinished = transform.localPosition.x / FloorManager.LEVEL_TILES.Length;
 		TrackPlayer();
+		
+		if (BPM >= 170.0f && audio.isPlaying ==false){
+			audio.Play();
+		}
+		
 	}
 	
 	private void TrackPlayer()
@@ -72,8 +78,10 @@ public class PlayerScript : MonoBehaviour {
             state = "recoverStamina";
         }
         BPM = heartRateManager.GetCurrentHeartRate();
+		
 	}
-
+	
+	
 	void OnGUI(){
 		GUI.Label(new Rect (0,0,100,20), "BPM: "+ BPM.ToString("0.00"));
 		GUI.Label(new Rect ( 0 , 20, 100 , 50), "% left: "+ (percentageFinished*100).ToString("0.00"));
