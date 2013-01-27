@@ -6,7 +6,7 @@ public class PlayerScript : MonoBehaviour {
     // Speeds
 	public static float defaultSpeed = 7.0f;
 	public static float slowDownSpeed = 5.0f;
-    public static float destructableObjectPenalty = -4.0f;
+    public static float destructableObjectPenalty = -3.0f;
 	
 	private float speed = 5.0f;
 	
@@ -86,7 +86,7 @@ public class PlayerScript : MonoBehaviour {
 		distanceTraveled += speed*Time.deltaTime;
 		
     
-        if (controller.isGrounded) {
+        if (controller.isGrounded && !hitRecovery) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= speed;
