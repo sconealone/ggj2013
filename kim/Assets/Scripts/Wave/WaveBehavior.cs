@@ -5,6 +5,7 @@ public class WaveBehavior : MonoBehaviour {
 	
 	public static float waveSpeed = 4.5f;
 	private bool isGameOver = false;
+    private float gameOverTimer = 0.0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -14,17 +15,22 @@ public class WaveBehavior : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.position +=  transform.right * waveSpeed * Time.deltaTime;	
+        if (isGameOver)
+        {
+            gameOverTimer -= Time.deltaTime;
+            if (gameOverTimer <= 0.0f)
+            {
+			    Application.LoadLevel("gameover");
+                isGameOver = false;
+            }
+        }
 	}
+
 	
-	void OnGUI(){
-		if (isGameOver) {
-      		GUI.Box(new Rect( (Screen.width * 0.5f) - 60f, Screen.height - 35f, 120f, 25f ), "Game Over");
-			Application.LoadLevel("gameover");
-		}
-	}
 	
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.name == "Player"){
+            gameOverTimer = 5.0f;
 			isGameOver = true;
 			Destroy(GameObject.Find("Player"));
 		}
