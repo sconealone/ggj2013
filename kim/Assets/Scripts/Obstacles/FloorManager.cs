@@ -35,7 +35,7 @@ public class FloorManager : MonoBehaviour {
 	 * S = shelf (1 block)
 	 * 
 	 */
-	private string LEVEL_TILES = "EEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEE" +
+	private string LEVEL_TILES = "EEEEEEESSSEEEEESSEEEEEEEESSEEEEESSEEEEEEEEE" +
 		"EEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSE" +
 		"EEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEE" +
 		"EEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEESSSEEEEESSEEEEEEEEEEEEEEESSEEEEESSEEEEEEEEEEE" +
@@ -108,12 +108,13 @@ public class FloorManager : MonoBehaviour {
 		switch(tiles[index]){
 		case 'S':
 			Transform t = (Transform) obstaclePool.Dequeue();
-			Debug.Log(obstacle_count++);
 			Vector3 newPosition = floorPosition;
 			newPosition.y = floorPosition.y + 1; 
 			t.localPosition = newPosition;
 			t.localScale = Vector3.one * 3;
-			
+			//Debug.Log(obstacle_count++ + "Location:"+t.localPosition.x+":"+t.localPosition.y);
+			Debug.Log(obstacle_count++ + "Floor Location:"+floorPosition.x+":"+floorPosition.y);
+
 			obstaclePool.Enqueue(t);
 			break;
 		default:

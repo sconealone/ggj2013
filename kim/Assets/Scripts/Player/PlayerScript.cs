@@ -13,7 +13,6 @@ public class PlayerScript : MonoBehaviour {
 	
 	private Vector3 moveDirection =  Vector3.zero;
 	
-	private bool isGameOver = false;
 	
 	public static float distanceTraveled;
 	// Use this for initialization
@@ -25,15 +24,8 @@ public class PlayerScript : MonoBehaviour {
 	void Update () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
 		Move();
-
-		
 	}
 	
-//	void OnGUI(){
-//		if (isGameOver) {
-///      	GUI.Label(Rect(0,0, 100, 20), "Game Over!");
-//		}
-//	}
 	
 	
 	void Move(){
@@ -75,11 +67,6 @@ public class PlayerScript : MonoBehaviour {
 		}
 	}*/
 	
-	void OnCollisionEnter(Collision collision){
-		if (collision.gameObject.name == "Wave"){
-			isGameOver = true;
-		}
-	}
 	
 	
 }
