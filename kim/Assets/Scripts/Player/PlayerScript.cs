@@ -5,8 +5,8 @@ public class PlayerScript : MonoBehaviour {
 	
     // Speeds
 	public static float defaultSpeed = 7.0f;
-	public static float slowDownSpeed = 4.0f;
-    public static float destructableObjectPenalty = -1.5f;
+	public static float slowDownSpeed = 5.0f;
+    public static float destructableObjectPenalty = -3.0f;
 	
 	private float speed = 5.0f;
 	
@@ -110,7 +110,7 @@ public class PlayerScript : MonoBehaviour {
         {
             hitRecovery = true;
             hitRecoveryTimer = 0;
-            speed = -2;
+            speed = destructableObjectPenalty;
         }
         else if (collisionInfo.gameObject.name.Equals("Destructable Object"))
         {
