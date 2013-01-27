@@ -28,6 +28,7 @@ public class WaveBehavior : MonoBehaviour {
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.name == "Player"){
 			isGameOver = true;
+			Destroy(GameObject.Find("Player"));
 		}
         else
         {
