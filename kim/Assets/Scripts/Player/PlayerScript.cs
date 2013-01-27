@@ -6,7 +6,7 @@ public class PlayerScript : MonoBehaviour {
     // Speeds
 	public static float defaultSpeed = 7.0f;
 	public static float slowDownSpeed = 5.0f;
-    public static float destructableObjectPenalty = -3.0f;
+    public static float destructableObjectPenalty = -4.0f;
 	
 	private float speed = 5.0f;
 	
@@ -53,7 +53,6 @@ public class PlayerScript : MonoBehaviour {
             if (hitRecoveryTimer > hitRecoveryTimePenalty) 
             {
                 hitRecovery = false;
-                speed = defaultSpeed;
             }
         }
     }
@@ -69,9 +68,10 @@ public class PlayerScript : MonoBehaviour {
 	
 	void Move(){
 		
-        if (hitRecovery)
+        CharacterController controller = GetComponent<CharacterController>();
+        if (hitRecovery || controller.isGrounded)
         {
-            // don't move
+            // don't change speed
         }
 		else if (Input.GetKey(KeyCode.A)){
 			speed = slowDownSpeed;
@@ -85,7 +85,6 @@ public class PlayerScript : MonoBehaviour {
 		transform.position += transform.right * speed * Time.deltaTime;
 		distanceTraveled += speed*Time.deltaTime;
 		
-        CharacterController controller = GetComponent<CharacterController>();
     
         if (controller.isGrounded) {
             moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
