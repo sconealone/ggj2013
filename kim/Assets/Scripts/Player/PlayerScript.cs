@@ -3,8 +3,10 @@ using System.Collections;
 
 public class PlayerScript : MonoBehaviour {
 	
-	public static float defaultSpeed = 5.0f;
-	public static float slowDownSpeed = 2.0f;
+    // Speeds
+	public static float defaultSpeed = 7.0f;
+	public static float slowDownSpeed = 4.0f;
+    public static float destructableObjectPenalty = -1.5f;
 	
 	private float speed = 5.0f;
 	
@@ -21,9 +23,12 @@ public class PlayerScript : MonoBehaviour {
 	private float BPM;
 	private float BPM_REG_RATE = 5;
 	private float BPM_JUMP_RATE = 3;
+    private const float BPM_OBSTACLE_PENALTY = 5;
+
 	
     private bool hitRecovery = false;
     private float hitRecoveryTimer = 0;
+    public static float hitRecoveryTimePenalty = 1.0f;
 	
 	// Use this for initialization
 	void Start () {
@@ -45,7 +50,7 @@ public class PlayerScript : MonoBehaviour {
         if (hitRecovery)
         {
             hitRecoveryTimer += Time.deltaTime;
-            if (hitRecoveryTimer > 1f) 
+            if (hitRecoveryTimer > hitRecoveryTimePenalty) 
             {
                 hitRecovery = false;
                 speed = defaultSpeed;
@@ -80,20 +85,20 @@ public class PlayerScript : MonoBehaviour {
 		transform.position += transform.right * speed * Time.deltaTime;
 		distanceTraveled += speed*Time.deltaTime;
 		
-			CharacterController controller = GetComponent<CharacterController>();
-		
-			if (controller.isGrounded){
-				moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-            	moveDirection = transform.TransformDirection(moveDirection);
-            	moveDirection *= speed;
-            	if (Input.GetButton("Jump")){
-				 	moveDirection.y = jumpSpeed;
-					BPM += BPM_JUMP_RATE;
-				}
-			}
-			
-			moveDirection.y -= gravity * Time.deltaTime;
-        	controller.Move(moveDirection * Time.deltaTime);
+        CharacterController controller = GetComponent<CharacterController>();
+    
+        if (controller.isGrounded) {
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
+            moveDirection *= speed;
+            if (Input.GetButton("Jump")){
+                moveDirection.y = jumpSpeed;
+                BPM += BPM_JUMP_RATE;
+            }
+        }
+        
+        moveDirection.y -= gravity * Time.deltaTime;
+        controller.Move(moveDirection * Time.deltaTime);
 	}
 	
 	void OnCollisionEnter(Collision collisionInfo){
@@ -105,18 +110,19 @@ public class PlayerScript : MonoBehaviour {
         {
             hitRecovery = true;
             hitRecoveryTimer = 0;
-            speed = -1;
-
+            speed = -2;
+        }
+        else if (collisionInfo.gameObject.name.Equals("Destructable Object"))
+        {
+            hitRecovery = true;
+            hitRecoveryTimer = 0;
+            speed = destructableObjectPenalty;
+            BPM += BPM_OBSTACLE_PENALTY;
         }
 		
 		Debug.Log("new BPM: " + BPM);
 	}
 	
-	/*void OnControllerColliderHit(ControllerColliderHit hit){
-		if (hit.gameObject.tag == "Collectable"){
-			Debug.Log ("-BPM BY 20");
-		}
-	}*/
 	
 	
 	

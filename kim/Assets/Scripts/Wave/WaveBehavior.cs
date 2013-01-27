@@ -3,7 +3,7 @@ using System.Collections;
 
 public class WaveBehavior : MonoBehaviour {
 	
-	public static float waveSpeed = 4.0f;
+	public static float waveSpeed = 5.5f;
 	private bool isGameOver = false;
 	
 	// Use this for initialization
