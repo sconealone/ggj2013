@@ -92,8 +92,17 @@ public class PlayerScript : MonoBehaviour {
 	
 	
 	void OnGUI(){
-		GUI.Label(new Rect (280,280,100,20), BPM.ToString("0"));
-//		GUI.Label(new Rect ( 0 , 20, 100 , 50), "% left: "+ (percentageFinished*100).ToString("0.00"));
+        // Update the BPM counter
+        GameObject camera = GameObject.Find("Main Camera");
+        GameObject hudSprite = GameObject.Find("hudOkSprite");
+        Vector3 hudWorldPos = new Vector3(hudSprite.transform.position.x - 0.75f, 9.3f); // I don't get the y position
+        Vector3 hudScreenPos = camera.camera.WorldToScreenPoint(hudWorldPos);
+        float width = 100.0f;
+        float height = 20.0f;
+        GUIStyle style = new GUIStyle();
+        style.fontSize = 32;
+        style.fontStyle = FontStyle.Bold;
+		GUI.Label(new Rect (hudScreenPos.x,hudScreenPos.y,width,height), BPM.ToString("0"), style);
 	}
 	
 	
