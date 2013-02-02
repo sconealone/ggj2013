@@ -133,7 +133,7 @@ public class PlayerScript : MonoBehaviour {
 		
     
         if (controller.isGrounded && !hitRecovery && !state.Equals("recoverStamina")) {
-            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= speed;
             if (Input.GetButton("Jump")){
