@@ -31,11 +31,11 @@ public class PlayerScript : MonoBehaviour {
 	private AudioSource heartBeat;
 	private AudioSource jump;
     private HudManager hudManager;
+    private WinTransitionManager winManager;
 
 	
 	// Use this for initialization
 	void Start () {
-	
 		AudioSource[] auSource = GetComponents<AudioSource>();
 		
 		heartBeat = auSource[0];
@@ -45,6 +45,8 @@ public class PlayerScript : MonoBehaviour {
         heartRateManager = new HeartRateManager(this);
         BPM = heartRateManager.GetCurrentHeartRate();
         hudManager = new HudManager(heartRateManager);
+        GameObject goal = GameObject.Find("Level Goal");
+        winManager = new WinTransitionManager(this, new Rect(goal.transform.position.x, goal.transform.position.y, 5.0f, 10.0f));
 	}
 	void FixedUpdate () {
 		//transform.Translate(5f*Time.deltaTime, 0f, 0f);
@@ -60,6 +62,7 @@ public class PlayerScript : MonoBehaviour {
 		}
 		
         hudManager.Update();
+        winManager.Update();
 	}
 	
 	private void TrackPlayer()
@@ -198,5 +201,11 @@ public class PlayerScript : MonoBehaviour {
     {
         state = aState;
     }
-	
+    public void BecomeInvincible()
+    {
+        // Ignore the wave
+        GameObject wave = GameObject.Find("Wave");
+        Destroy(wave.rigidbody);
+    }
+
 }

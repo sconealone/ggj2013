@@ -30,9 +30,9 @@ public class WaveBehavior : MonoBehaviour {
 	
 	void OnCollisionEnter(Collision collision) {
 		if (collision.gameObject.name == "Player"){
-            gameOverTimer = 5.0f;
-			isGameOver = true;
-			Destroy(GameObject.Find("Player"));
+                gameOverTimer = 5.0f;
+                isGameOver = true;
+                Destroy(GameObject.Find("Player"));
 		}
         else
         {

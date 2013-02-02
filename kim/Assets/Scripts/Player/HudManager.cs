@@ -19,8 +19,8 @@ public class HudManager
         hudWarningSprite = GameObject.Find("hudWarningSprite");
         hudOkSprite = GameObject.Find("hudOkSprite");
 
-        showOk = true;
-        showDanger = false;
+        showOk = false;
+        showDanger = true;
         showWarning = false;
     }
 

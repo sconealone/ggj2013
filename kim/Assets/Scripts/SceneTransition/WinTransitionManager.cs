@@ -1,24 +1,25 @@
 using UnityEngine;
 
-public class WinTransitionManager : MonoBehaviour
+public class WinTransitionManager
 {
     private float winCountdown = 0.0f;
     private bool didWin = false;
+    private PlayerScript player;
+    private Rect goalHitbox;
 
-    void OnCollisionEnter(Collision collision)
+    public WinTransitionManager(PlayerScript player, Rect goalHitbox)
     {
-        
-        if (collision.gameObject.name.Equals("Player"))
-        {
-            winCountdown = 2.0f;
-            didWin = true;
-
-        }
+        this.player = player;
+        this.goalHitbox = goalHitbox;
     }
 
-    void Update()
+    public void Update()
     {
-
+        bool reachedGoal = goalHitbox.Contains(player.transform.position);
+        if (reachedGoal)
+        {
+            triggerCountdown();
+        }
         if (didWin)
         {
             winCountdown -= Time.deltaTime;
@@ -30,6 +31,13 @@ public class WinTransitionManager : MonoBehaviour
             }
 
         }
+    }
+
+    private void triggerCountdown()
+    {
+        didWin = true;
+        winCountdown = 2.0f;
+        player.BecomeInvincible();
     }
 }
 
