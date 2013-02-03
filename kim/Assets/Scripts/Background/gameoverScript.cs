@@ -3,10 +3,9 @@ using System.Collections;
 
 public class gameoverScript : MonoBehaviour {
 	
-	private string START_GAME_SCENE = "HCLevel1";
+	private string START_GAME_SCENE = "HCLevel1ReleaseCandidate";
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -14,8 +13,9 @@ public class gameoverScript : MonoBehaviour {
 	
 	}
 	void OnGUI(){
-		GUI.Box (new Rect (10,10,100,90), "Loader Menu");
-		if(GUI.Button (new Rect (20,40,80,20), "Try Again!")){
+    
+		//GUI.Box (new Rect (Screen.width/2,Screen.height/2,100,90), "Loader Menu");
+		if(GUI.Button (new Rect (Screen.width/2,Screen.height/2,80,20), "Try Again!")){
 			Application.LoadLevel(START_GAME_SCENE);
 		}
 	}
