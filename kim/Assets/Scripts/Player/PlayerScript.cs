@@ -177,6 +177,8 @@ public class PlayerScript : MonoBehaviour {
             speed = destructableObjectPenalty;
             state = "hitRecovery";
             heartRateManager.AssignPenalty(collisionInfo.gameObject.name);
+			GameObject.Find("eletricalshock").audio.Play();
+			Debug.Log("shocked");
         }
         else if (collisionInfo.gameObject.name.Equals("Light"))
         {
